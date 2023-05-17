@@ -22,18 +22,18 @@ scrape_configs:
     # Override the global default and scrape targets from this job every 5 seconds.
     scrape_interval: 5s
     static_configs:
-      - targets: ['52.6.39.73:9100']
+      - targets: ['172.31.80.24:9100']
 
   - job_name: 'postgresql-exporter'
     static_configs:
-      - targets: ['52.6.39.73:9187']
+      - targets: ['172.31.80.24:9187']
 
   - job_name: 'solr-exporter'
     static_configs:
-      - targets: ['52.6.39.73:8989']
-      
+      - targets: ['172.31.80.24:8989']
+
   - job_name: 'isb-exporter'
     # scrape the iSB metrics once a day
     scrape_interval: 60s
     static_configs:
-      - targets: ['52.6.39.73:8000']
+      - targets: ['172.31.80.24:8000']
