@@ -1,0 +1,14 @@
+version: "3.8"
+services:
+    prometheus:
+        build: ./prometheus_docker
+        ports:
+            - "9090:9090"
+        volumes:
+            - prometheus_data:/prometheus
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+						
+volumes:
+    prometheus_data:
+        name: prometheus_data
