@@ -8,7 +8,12 @@ services:
             - prometheus_data:/prometheus
         extra_hosts:
             - "host.docker.internal:host-gateway"
-						
+            
+    prometheus_alerting:
+        build: ./prometheus_alerting_docker
+        ports:
+            - "9093:9093"
+
 volumes:
     prometheus_data:
         name: prometheus_data

@@ -1,0 +1,15 @@
+groups:
+  - name: iSamples Alert Rules
+    rules:
+      - alert: PostGres Down
+        expr: pg_up == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "pg_up has turned to 0"
+          description: "The value of pg_up has been zero for more than 1 minute."
+          action: "Check the system for potential issues."
+          email_subject: "Alert: pg_up turned to 0"
+
+      # Additional alert rules can be defined here
