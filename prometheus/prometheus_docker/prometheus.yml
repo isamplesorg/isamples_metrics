@@ -14,7 +14,7 @@ rule_files:
 alerting:
   alertmanagers:
     - static_configs:
-        - targets: ['localhost:9093']
+        - targets: ['prometheus_alerting:9093']
 
 # A scrape configuration containing exactly one endpoint to scrape:
 # Here it's Prometheus itself.
