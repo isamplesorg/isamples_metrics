@@ -4,11 +4,34 @@ global:
   smtp_auth_username: ''
   smtp_auth_password: ''
   smtp_require_tls: true
+  # This is the url to post to #technical
+  #slack_api_url: 'https://hooks.slack.com/services/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'
+  # This is the url to post to #alerts-testing
+  slack_api_url: "https://hooks.slack.com/services/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"
+
+#route:
+#  receiver: 'email-notifications'
+
+#receivers:
+#  - name: 'email-notifications'
+#    email_configs:
+#      - to: 'danny.mandel@gmail.com'
 
 route:
-  receiver: 'email-notifications'
+  receiver: 'slack-notifications'
 
 receivers:
-  - name: 'email-notifications'
-    email_configs:
-      - to: 'danny.mandel@gmail.com'
+  - name: 'slack-notifications'
+    slack_configs:
+      - title: "🔥🔥🔥 {{ range .Alerts }}{{ .Annotations.summary }}\n{{ end }}"
+      - text: >-
+         {{ range .Alerts -}}
+         *Alert:* {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
+
+         *Description:* {{ .Annotations.description }}
+
+         *Details:*
+           {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
+           {{ end }}
+         {{ end }}
+      - send_resolved: true
