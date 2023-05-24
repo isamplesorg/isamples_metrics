@@ -4,21 +4,20 @@ global:
   smtp_auth_username: ''
   smtp_auth_password: ''
   smtp_require_tls: true
-  # This is the url to post to #technical
-  #slack_api_url:
-  # This is the url to post to #alerts-testing
-  slack_api_url:
+  # This is the slack webhook URL.  DO NOT CHECK IN.  Edit on box.
+  slack_api_url: 
 
 #route:
 #  receiver: 'email-notifications'
 
-#receivers:
-#  - name: 'email-notifications'
-#    email_configs:
-#      - to: 'danny.mandel@gmail.com'
 
 route:
-  receiver: 'slack-notifications'
+  receiver: "slack-notifications"
+  routes:
+    - receiver: 'email-notifications'
+      continue: true
+    - receiver: 'slack-notifications'
+      continue: true
 
 receivers:
   - name: 'slack-notifications'
@@ -35,3 +34,7 @@ receivers:
            {{ end }}
          {{ end }}
       - send_resolved: true
+
+  - name: 'email-notifications'
+    email_configs:
+      - to: 'danny.mandel@gmail.com'
