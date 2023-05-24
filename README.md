@@ -140,3 +140,11 @@ Prometheus is deployed in a docker container, and the various bits of config are
 
 ### miscellaneous notes about deploying on AWS
 The programs that contribute the statistics (exporters, in prometheus terms), are running as part of the docker compose ensemble on iSamples in a Box.  In order for prometheus to run on a separate machine (how we have it deployed on AWS), the exporters need to bind to a port that is accessible from the machine where prometheus runs.  On AWS, this was just a matter of configuring a security group that allowed [all traffic](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html#sg-rules-other-instances) with the security group, and then assigning the security group to both the iSB instance and the prometheus instance.  Note that the prometheus config *must* use the internal IP addresses within the security group to harvest the stats.  Given that [internal IP addresses stay assigned to an instance](https://docs.aws.amazon.com/vpc/latest/userguide/vpc-ip-addressing.html) as long as it isn't decommissioned, this is acceptable for deploying long-lasting config.
+
+### Configuring Slack alerts
+
+Prometheus has the ability to deliver slack alerts.  We implemented this by creating a slack [webhook](https://api.slack.com/messaging/webhooks), and pointed the prometheus config (defined in `alertmanager.yml`) at the generated URL.  There are two different values for `slack_api_url` in there -- one for actual production use, and one for testing the alerts against a sandbox `#alerts-testing` slack channel.
+
+#### Secrets
+
+Note that Slack Webhook URLs and SMTP credentials are secrets and *should not* be checked into GitHub.  These values will need to be manually edited on the box where prometheus is deployed.
