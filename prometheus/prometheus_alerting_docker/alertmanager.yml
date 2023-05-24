@@ -5,9 +5,9 @@ global:
   smtp_auth_password: ''
   smtp_require_tls: true
   # This is the url to post to #technical
-  #slack_api_url: 'https://hooks.slack.com/services/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'
+  #slack_api_url:
   # This is the url to post to #alerts-testing
-  slack_api_url: "https://hooks.slack.com/services/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"
+  slack_api_url:
 
 #route:
 #  receiver: 'email-notifications'
