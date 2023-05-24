@@ -2,12 +2,31 @@ groups:
   - name: iSamples Alert Rules
     rules:
 
-      # Additional alert rules can be defined here
       - alert: PostGres Down
         expr: pg_up == 0
-        for: 1m
+        for: 5m
         labels:
           severity: critical
         annotations:
           summary: "PostGres Instance {{ $labels.instance }} is down"
-          description: '{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 1 minute.'
+          description: '{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes.'
+          
+      - alert: Solr Down
+        expr: absent(solr_ping)
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Solr is down"
+          description: "We haven't detected a solr_ping gauge for more than 5 minutes."
+          
+      - alert: iSamples Python Down
+        expr: absent(isamples_thing_scrape_duration_seconds)
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "iSamples Python is down"
+          description: "We haven't detected an isamples_thing_scrape_duration_seconds gauge for more than 5 minutes."
+
+      # Additional alert rules can be defined here

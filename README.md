@@ -148,3 +148,10 @@ Prometheus has the ability to deliver slack alerts.  We implemented this by crea
 #### Secrets
 
 Note that Slack Webhook URLs and SMTP credentials are secrets and *should not* be checked into GitHub.  These values will need to be manually edited on the box where prometheus is deployed.
+
+### Existing rules
+There are currently (as of 5/24/2023) 3 rules: solr, postgresql, and python.  Of the 3, only the postgres exporter can do something useful if the postgres instance goes down.  Because of this, it has the simplest check:
+`pg_up == 0`.  The other two checks rely on an absence of a gauge for 5 minutes using the `absent()` function.  Note that I couldn't figure out a way to write an expression that would assert that it was present for every instance.  So, I had to limit the monitored hosts to the production instance otherwise the presence of the gauge on the dev instance would cause it to not fire.  I'm sure there is a way to do it but I have given up trying for now.
+
+### Adding new alerting rules
+You can add new alerting rules by editing `prometheus_docker/prometheus.rules.yml` and adding the rules to the end of the config file.

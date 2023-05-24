@@ -6,8 +6,8 @@ After=docker.service
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-WorkingDirectory=/home/isamples/prometheus
-ExecStart=/usr/bin/docker compose up -d
+WorkingDirectory=/home/isamples/isamples_metrics/prometheus
+ExecStart=/usr/bin/docker compose up -d --build
 ExecStop=/usr/bin/docker compose down 
 TimeoutStartSec=0
 
