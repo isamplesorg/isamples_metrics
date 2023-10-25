@@ -9,7 +9,7 @@ groups:
           severity: critical
         annotations:
           summary: "PostGres Instance {{ $labels.instance }} is down"
-          description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes. See http://44.210.63.213:9090/graph?g0.expr=pg_up&g0.tab=0&g0.stacked=0&g0.show_exemplars=0&g0.range_input=1h for details."
+          description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes. See http://mars.cyverse.org:9090/graph?g0.expr=pg_up&g0.tab=0&g0.stacked=0&g0.show_exemplars=0&g0.range_input=1h for details."
           
       - alert: Solr Down
         expr: absent(solr_ping)
@@ -18,7 +18,7 @@ groups:
           severity: critical
         annotations:
           summary: "Solr is down"
-          description: "We haven't detected a solr_ping gauge for more than 5 minutes. See http://44.210.63.213:9090/graph?g0.expr=solr_ping&g0.tab=0&g0.stacked=0&g0.show_exemplars=0&g0.range_input=1h for details."
+          description: "We haven't detected a solr_ping gauge for more than 5 minutes. See http://mars.cyverse.org:9090/graph?g0.expr=solr_ping&g0.tab=0&g0.stacked=0&g0.show_exemplars=0&g0.range_input=1h for details."
           
       - alert: iSamples Python Down
         expr: absent(isamples_thing_scrape_duration_seconds)
@@ -27,6 +27,6 @@ groups:
           severity: critical
         annotations:
           summary: "iSamples Python is down"
-          description: "We haven't detected an isamples_thing_scrape_duration_seconds gauge for more than 91 minutes. See http://44.210.63.213:9090/graph?g0.expr=isamples_thing_scrape_duration_seconds&g0.tab=0&g0.stacked=0&g0.show_exemplars=0&g0.range_input=1h for details."
+          description: "We haven't detected an isamples_thing_scrape_duration_seconds gauge for more than 91 minutes. See http://mars.cyverse.org:9090/graph?g0.expr=isamples_thing_scrape_duration_seconds&g0.tab=0&g0.stacked=0&g0.show_exemplars=0&g0.range_input=1h for details."
 
       # Additional alert rules can be defined here
