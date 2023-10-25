@@ -26,19 +26,20 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
-  - job_name:       'node'
-    static_configs:
-      - targets: ["172.31.86.122:9100"]
+# This one isn't working yet…
+#  - job_name:       'node'
+#    static_configs:
+#      - targets: ["172.31.86.122:9100"]
 
   - job_name: 'postgresql-exporter'
     static_configs:
-      - targets: ["172.31.86.122:9187"]
+      - targets: ["hyde.cyverse.org:9187"]
 
   - job_name: 'solr-exporter'
     static_configs:
-      - targets: ["172.31.86.122:8989"]
+      - targets: ["hyde.cyverse.org:8989"]
 
   - job_name: 'isb-exporter'
     scrape_interval: 60s
     static_configs:
-      - targets: ["172.31.86.122:8000"]
+      - targets: ["hyde.cyverse.org:8000"]
