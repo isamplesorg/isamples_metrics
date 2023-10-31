@@ -117,15 +117,20 @@ curl -i -X POST https://metrics.isample.xyz/api/event \
 At this point, you just need to point the iSamples web services to the deployed plausible installation.  There are two 
 keys to edit in `isb_web_config.env`:
 ```
-ANALYTICS_URL = "https://metrics.isample.xyz/api/event"
+ANALYTICS_SRC = "https://metrics.isample.xyz/js/plausible.js"
 ANALYTICS_DOMAIN = "isamples.org"
 ```
 Note that for every iSB setup, there should be a distinct plausible site, and the `ANALYTICS_DOMAIN` key should 
 correspond to that sitename in plausible.
 
-There is one file with the implementation, called `analytics.py`, but the general idea is simple.  For every API call, 
+There is one python file with the implementation, called `analytics.py`, but the general idea is simple.  For every API call, 
 there should be a new entry in the enum, and you just call `record_analytics_event` from the api callsite with the 
 corresponding `AnalyticsEvent` type.
+
+### An explanation on the two distinct paths involved in metrics reporting
+
+* There are two separate mechanisms where analytics are reported to plausible.  On every page view in the web UI, analytics are reported via JavaScript.  The piece that controls how this is reported to the server is the `ANALYTICS_SRC` Docker arg.  Plausible parses out the JavaScript src file and infers the plausible api url from it.  The `ANALYTICS_DOMAIN` is also reported with every JavaScript event call.  These are both defined in the various `.env` files that are passed to the Docker build process.
+* The second mechanism is via python, which uses the same `.env` files (and Docker build arguments), but writes them out to `isb_web_config.env` during the Docker build process.  Those are then loaded via the python config loading mechanism, and read out during the custom analytics reporting code that runs on every API request.
 
 ## prometheus
 
